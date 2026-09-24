@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Notes</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+<nav>
+    <a href="/">🏠 Home</a>
+    <a href="/notes/">📚 All Notes</a>
+    <a href="/add-note/">➕ Add Note</a>
+
+   {% if user.is_authenticated %}
+    <span style="color: white; margin: 0 20px;">
+        👋 Welcome, {{ user.username }}
+    </span>
+    <a href="/logout/">🚪 Logout</a>
+{% else %}
+    <a href="/login/">🔐 Login</a>
+    <a href="/register/">📝 Register</a>
+{% endif %}
+</nav>
+    
+
+    <h1>Notes Sharing Website</h1>
+    <form method="GET" action="/notes/" class="search-form">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search notes..."
+    >
+
+    <button type="submit">🔍 Search</button>
+
+</form>
+
+    <div class="notes-container">
+
+        {% if notes %}
+
+            {% for note in notes %}
+
+                <div class="note-card">
+
+                    <h2>{{ note.title }}</h2>
+
+                    <p>
+                        <strong>Subject:</strong> {{ note.subject }}
+                    </p>
+
+                    <p>{{ note.description }}</p>
+
+                    <p>
+                        <small>Uploaded: {{ note.uploaded_at }}</small>
+                    </p>
+                    <a href="{% url 'view_note' note.id %}">View</a>
+                    <a href="{% url 'edit_note' note.id %}">Edit</a>
+                    <a href="{% url 'delete_note' note.id %}">Delete</a>
+                    <a href="{{ note.file.url }}" target="_blank" class="download-btn">
+                         Download Note
+                    </a>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No notes available yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

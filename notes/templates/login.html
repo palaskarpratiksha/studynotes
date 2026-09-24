@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - StudyNotes</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">🏠 Home</a>
+        <a href="/notes/">📚 All Notes</a>
+        <a href="/add-note/">➕ Add Note</a>
+    </nav>
+
+    <div class="form-container">
+
+        <h1>🔐 Login</h1>
+
+        <p>Login to your StudyNotes account.</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>Username:</label>
+            <input type="text" name="username" required>
+
+            <label>Password:</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">🔐 Login</button>
+
+        </form>
+
+        <p>
+            Don't have an account?
+            <a href="/register/">Register</a>
+        </p>
+
+    </div>
+
+</body>
+</html>

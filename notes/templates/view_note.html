@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Note</title>
+</head>
+<body>
+
+<h2>{{ note.title }}</h2>
+
+<p><strong>Subject:</strong> {{ note.subject }}</p>
+
+<p><strong>Description:</strong></p>
+<p>{{ note.description }}</p>
+
+<p><strong>Uploaded On:</strong> {{ note.uploaded_at }}</p>
+
+{% if note.file %}
+    <p>
+        <a href="{{ note.file.url }}" target="_blank">View / Open File</a>
+    </p>   
+       <p> <a href="{{ note.file.url }}" download>Download File</a>  
+    </p>
+{% endif %}
+
+<br>
+
+<a href="{% url 'notes_list' %}">← Back to Notes</a>
+
+</body>
+</html>

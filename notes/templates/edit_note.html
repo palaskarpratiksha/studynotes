@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Note - StudyNotes</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav>
+        <a href="/">🏠 Home</a>
+        <a href="/notes/">📚 All Notes</a>
+        <a href="/add-note/">➕ Add Note</a>
+        <a href="/my-notes/">👤 My Notes</a>
+
+        {% if user.is_authenticated %}
+            <span class="welcome-user">
+                👋 Welcome, {{ request.user.username }}
+            </span>
+            <a href="/logout/">🚪 Logout</a>
+        {% endif %}
+    </nav>
+
+    <section class="form-section">
+
+        <h1>✏️ Edit Note</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Title:</label>
+            <input type="text" name="title" value="{{ note.title }}" required>
+
+            <label>Subject:</label>
+            <input type="text" name="subject" value="{{ note.subject }}" required>
+
+            <label>Description:</label>
+            <textarea name="description" required>{{ note.description }}</textarea>
+
+            <label>Current File:</label>
+            <p>📄 {{ note.file.name }}</p>
+
+            <label>Replace File (optional):</label>
+            <input type="file" name="file">
+
+            <button type="submit">💾 Update Note</button>
+
+        </form>
+
+    </section>
+
+</body>
+</html>
